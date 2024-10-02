@@ -1,28 +1,22 @@
 package by.bsuir.demo;
 
 import javafx.fxml.FXMLLoader;
-import javafx.util.Callback;
+import javafx.scene.Parent;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 
-@Component
+import java.io.IOException;
+
 public class SpringFXMLLoader {
 
-	private final ApplicationContext context;
-
-	public SpringFXMLLoader(ApplicationContext context) {
-		this.context = context;
-	}
-
-	public FXMLLoader load(String fxmlPath) {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-		loader.setControllerFactory(new Callback<Class<?>, Object>() {
-			@Override
-			public Object call(Class<?> param) {
-				return context.getBean(param);
-			}
-		});
-		return loader;
-	}
+    public static Parent load(ApplicationContext context, Class<?> clazz, String fxmlPath) {
+        FXMLLoader loader = new FXMLLoader(clazz.getResource(fxmlPath));
+        loader.setControllerFactory(context::getBean);
+        try {
+            loader.load();
+        } catch (IOException ex) {
+            System.err.println("Cannot load resource " + fxmlPath);
+        }
+        return loader.getRoot();
+    }
 }
 

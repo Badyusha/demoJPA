@@ -6,10 +6,10 @@ import javafx.scene.control.Label;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
-@RequiredArgsConstructor
+//@Component
+//@RequiredArgsConstructor
 public class HelloController {
-	private final GroupRepository groupRepository;
+//	private final GroupRepository groupRepository;
 
 	@FXML
 	private Label welcomeText;
@@ -17,6 +17,5 @@ public class HelloController {
 	@FXML
 	protected void onHelloButtonClick() {
 		welcomeText.setText("Welcome to JavaFX Application!");
-		System.out.println(groupRepository.findAll());
 	}
 }
